@@ -31,11 +31,6 @@ async function deleteMultiple(config) {
     return false
   }
 
-  tbs = await getTBS()
-  if(!tbs){
-    throw new Error('REPLY: Delete Error: invalid tbs, please login again!')
-  }
-
   for (let index = len - 1; index >= 0; index--) {
     console.log(`${tag}: -----Start Deleting No.${index + 1}----------------------`)
     const status = await deleteOne(list[index])
@@ -49,10 +44,17 @@ async function deleteMultiple(config) {
 
 // 删除一个
 async function deleteOne(params) {
+  tbs = await getTBS()
+  if(!tbs){
+    console.log(`${tag}: 请重新登陆，并设置cookie! `)
+    return false
+  }
+
   const fd = new URLSearchParams()
   Object.keys(params).forEach(key => {
     fd.append(key, params[key])
   })
+  fd.append('tbs',tbs)
 
   const url = 'https://tieba.baidu.com/f/commit/post/delete'
   const response = await request(url, {
@@ -104,7 +106,7 @@ async function getOnePage(page) {
     if (cid && cid != 0) { // cid != 0, 表示是楼中楼回复
       pid = cid
     }
-    return { tbs, tid, pid }
+    return { tid, pid }
   });
   return new Promise(resolve=>{
     setTimeout(()=>{

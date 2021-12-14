@@ -1,6 +1,6 @@
 const cheerio = require('cheerio')
 const { request } = require('./request')
-const tag = 'TIE' // 帖子
+const tag = 'POST' // 帖子
 const { getTBS, parseReplyParams } = require('./utils')
 
 let requestInterval = 350
@@ -31,11 +31,6 @@ async function deleteMultiple(config) {
     return false
   }
 
-  tbs = await getTBS()
-  if(!tbs){
-    throw new Error('REPLY: Delete Error: invalid tbs, please login again!')
-  }
-
   for (let index = len - 1; index >= 0; index--) {
     console.log(`${tag}: -----Start Deleting No.${index + 1}----------------------`)
     const status = await deleteOne(list[index])
@@ -49,10 +44,18 @@ async function deleteMultiple(config) {
 
 // 删除一个
 async function deleteOne(params) {
+
+  tbs = await getTBS()
+  if(!tbs){
+    console.log(`${tag}: 请重新登陆，并设置cookie! `)
+    return false
+  }
+
   const fd = new URLSearchParams()
   Object.keys(params).forEach(key => {
     fd.append(key, params[key])
   })
+  fd.append('tbs',tbs)
 
   const url = 'https://tieba.baidu.com/f/commit/post/delete'
   const response = await request(url, {
@@ -86,25 +89,20 @@ async function getMultiplePage(start, end) {
   return data
 }
 
-// 获取一页评论
+// 获取一页
 async function getOnePage(page) {
-  const url = `http://tieba.baidu.com/i/i/my_reply?&pn=${page}`
+  const url = `http://tieba.baidu.com/i/i/my_tie?&pn=${page}`
   const response = await request(url)
   const data = await response.text()
   const $ = cheerio.load(data)
-  const list = $('a.for_reply_context').map((index, el) => {
+  const list = $('a.thread_title').map((index, el) => {
     const href = $(el).attr('href')
     let tid = href.match(/\/p\/([0-9]+)/) 
-    tid = tid && tid[1] || null // 帖子id
+    tid = tid && tid[1] || null
     let pid = href.match(/pid=([0-9]+)/)
     pid = pid && pid[1] || null
-    let cid = href.match(/cid=([0-9]+)/)
-    cid = cid && cid[1] || null
 
-    if (cid && cid != 0) { // cid != 0, 表示是楼中楼回复
-      pid = cid
-    }
-    return { tbs, tid, pid }
+    return { tid, pid }
   });
   return new Promise(resolve=>{
     setTimeout(()=>{
@@ -114,4 +112,4 @@ async function getOnePage(page) {
   })
 }
 
-module.exports.deleteReplies = deleteMultiple
+module.exports.deletePosts = deleteMultiple

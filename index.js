@@ -1,49 +1,58 @@
 // const { getReplys } = require('./reply');
 // const { deleteReplys } = require('./delete');
 const fs = require("fs");
-const { getTBS } = require('./utils')
+const { getTBS } = require('./src/utils')
 const config = require('./config')
-const { deleteReplies } = require('./deleteReply')
-const { deleteConcerns } = require('./deleteConcern')
-const { deleteTieba } = require('./deleteTieba')
-const { deleteFans } = require('./deleteFans')
+const { deleteReplies } = require('./src/deleteReply')
+const { deletePosts } = require('./src/deletePost')
+const { deleteConcerns } = require('./src/deleteConcern')
+const { deleteTieba } = require('./src/deleteTieba')
+const { deleteFans } = require('./src/deleteFans')
 
 const cookie = fs.readFileSync('./cookie');
 
 (async () => {
 
   if(!cookie){
-    throw new Error('Invalid Cookie!')
+    console.error('无效的cookie!')
+    return false
   }
 
   const tbs = await getTBS()
   if(!tbs){
-    throw new Error('Please Login Again!')
+    console.error('cookie失效,请重新登陆,然后设置cookie!')
+    return false
   }
 
-  const { reply, concern, tieba, fans } = config
+  const { reply, post, concern, tieba, fans } = config
   
   if(reply.enable){
     console.log('---------------------------------------')
-    console.log('Start Delete Reply...')
+    console.log('开始删除评论...')
     await deleteReplies(reply)
+  }
+
+  if(post.enable){
+    console.log('---------------------------------------')
+    console.log('开始删除帖子...')
+    await deletePosts(post)
   }
   
   if(concern.enable){
     console.log('---------------------------------------')
-    console.log('Start Delete Concern...')
+    console.log('开始取消关注的人...')
     await deleteConcerns(concern)
   }
   
   if(tieba.enable){
     console.log('---------------------------------------')
-    console.log('Start Delete Tieba...')
+    console.log('开始取消关注的贴吧...')
     await deleteTieba(tieba)
   }
   
   if(fans.enable){
     console.log('---------------------------------------')
-    console.log('Start Delete Fans...')
+    console.log('开始移除粉丝...')
     await deleteFans(fans)
   }
 
