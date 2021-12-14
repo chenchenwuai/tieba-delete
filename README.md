@@ -9,7 +9,7 @@
   + 然后刷新页面，然后点击network下方列表中的第一个请求，名称为`tieba.baidu.com`
   + 找到右方的`Headers`中`Request Headers`中的`cookie`，然后右键选择复制
   + 将复制到的东西粘贴到cookie的文件中，不要忘记保存，(可参考images下面的`获取cookie`图片)
-  + 当账号在次浏览器退出或重新登录后，cookie就失效了，需要重新设置cookie
+  + 当账号在浏览器退出或重新登录后，cookie就失效了，需要重新设置cookie
 + 进行操作项配置，详细请查看`config.js`文件
 + 配置好之后，在当前路径下运行cmd
 + 输入`node index`或者`npm run start`开始执行删除
