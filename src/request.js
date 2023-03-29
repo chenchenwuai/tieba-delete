@@ -5,7 +5,7 @@ const cookie = fs.readFileSync('./cookie');
 // 请求
 async function request(url,options={}) {
   return await fetch(url, {
-    headers:{ cookie },
+    headers:{ Cookie: encodeURI(cookie.toString('utf-8')) },
     ...options
   })
 }
