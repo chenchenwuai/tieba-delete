@@ -94,7 +94,7 @@ async function getOnePage(page) {
   const response = await request(url)
   const data = await response.text()
   const $ = cheerio.load(data)
-  const list = $('a.b_reply').map((index, el) => {
+  const list = $('a.for_reply_context').map((index, el) => {
     const href = $(el).attr('href')
     let tid = href.match(/\/p\/([0-9]+)/) 
     tid = tid && tid[1] || null // 帖子id
