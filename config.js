@@ -1,5 +1,4 @@
-module.exports = {
-
+export const config = {
   reply:{     // 删除回复的配置
     enable: true,     // true->开启, false->关闭删除回复功能
     start: 1,        // 回复开始页 http://tieba.baidu.com/i/i/my_reply?&pn=1
@@ -22,7 +21,7 @@ module.exports = {
   },
 
   tieba:{     // 取消关注贴吧的配置
-    enable: true,
+    enable: false,
     start: 1,        // 开始页 http://tieba.baidu.com/f/like/mylike?pn=1
     end: 2,          // 结束页 http://tieba.baidu.com/f/like/mylike?pn=2
     interval: 350
@@ -34,4 +33,5 @@ module.exports = {
     end: 2,          // 结束页 http://tieba.baidu.com/i/i/fans?pn=2
     interval: 350
   },
+
 }

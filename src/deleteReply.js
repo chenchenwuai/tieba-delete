@@ -1,13 +1,13 @@
-const cheerio = require('cheerio')
-const { request } = require('./request')
+import cheerio from 'cheerio';
+import { request } from './request.js';
 const tag = 'REPLY' // 回复
-const { getTBS, parseReplyParams } = require('./utils')
+import { getTBS } from './utils.js';
 
 let requestInterval = 350
 let tbs = ''
 
 // 删除多个
-async function deleteMultiple(config) {
+export async function ReplyDeleteMultiple(config) {
 
   let { start, end, interval } = config
   requestInterval = interval || 350
@@ -43,7 +43,7 @@ async function deleteMultiple(config) {
 }
 
 // 删除一个
-async function deleteOne(params) {
+export async function deleteOne(params) {
   tbs = await getTBS()
   if(!tbs){
     console.log(`${tag}: 请重新登陆，并设置cookie! `)
@@ -77,7 +77,7 @@ async function deleteOne(params) {
 }
 
 // 获取多页
-async function getMultiplePage(start, end) {
+export async function getMultiplePage(start, end) {
   console.log(`${tag}: Getting, page:${start}->${end}`)
   const data = []
   for (let page = end; page >= start; page--) {
@@ -89,7 +89,7 @@ async function getMultiplePage(start, end) {
 }
 
 // 获取一页评论
-async function getOnePage(page) {
+export async function getOnePage(page) {
   const url = `http://tieba.baidu.com/i/i/my_reply?&pn=${page}`
   const response = await request(url)
   const data = await response.text()
@@ -115,5 +115,3 @@ async function getOnePage(page) {
     },requestInterval)
   })
 }
-
-module.exports.deleteReplies = deleteMultiple

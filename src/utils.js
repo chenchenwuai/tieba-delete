@@ -1,7 +1,6 @@
-const { request } = require('./request')
-
+import { request } from './request.js';
 // 获取tbs
-async function getTBS() {
+export async function getTBS() {
   const response = await request('http://tieba.baidu.com/dc/common/tbs')
   const data = await response.json()
   if(data && data.is_login && data.tbs){
@@ -10,5 +9,3 @@ async function getTBS() {
     return false
   }  
 }
-
-module.exports.getTBS = getTBS

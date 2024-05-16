@@ -1,10 +1,10 @@
-const cheerio = require('cheerio')
-const { request } = require('./request')
+import cheerio from 'cheerio';
+import { request } from './request.js';
 const tag = 'FANS' // 粉丝
 
 let requestInterval = 350
 // 删除多个
-async function deleteMultiple(config) {
+export async function FansDeleteMultiple(config) {
 
   let { start, end, interval } = config
   requestInterval = interval || 350
@@ -40,7 +40,7 @@ async function deleteMultiple(config) {
 }
 
 // 删除一个
-async function deleteOne(params) {
+export async function deleteOne(params) {
   const fd = new URLSearchParams()
   Object.keys(params).forEach(key => {
     fd.append(key, params[key])
@@ -67,7 +67,7 @@ async function deleteOne(params) {
 }
 
 // 获取多页
-async function getMultiplePage(start, end) {
+export async function getMultiplePage(start, end) {
   console.log(`${tag}: Getting, page:${start}->${end}`)
   const data = []
   for (let page = end; page >= start; page--) {
@@ -79,7 +79,7 @@ async function getMultiplePage(start, end) {
 }
 
 // 获取一页
-async function getOnePage(page) {
+export async function getOnePage(page) {
   const url = `http://tieba.baidu.com/i/i/fans?pn=${page}`
   const response = await request(url)
   const data = await response.text()
@@ -98,5 +98,3 @@ async function getOnePage(page) {
     },requestInterval)
   })
 }
-
-module.exports.deleteFans = deleteMultiple

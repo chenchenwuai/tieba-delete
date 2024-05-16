@@ -1,13 +1,11 @@
-// const { getReplys } = require('./reply');
-// const { deleteReplys } = require('./delete');
-const fs = require("fs");
-const { getTBS } = require('./src/utils')
-const config = require('./config')
-const { deleteReplies } = require('./src/deleteReply')
-const { deletePosts } = require('./src/deletePost')
-const { deleteConcerns } = require('./src/deleteConcern')
-const { deleteTieba } = require('./src/deleteTieba')
-const { deleteFans } = require('./src/deleteFans')
+import fs from 'fs';
+import { getTBS } from './src/utils.js';
+import { config } from './config.js';
+import { ReplyDeleteMultiple as deleteReplies } from './src/deleteReply.js';
+import { PostDeleteMultiple as deletePosts } from './src/deletePost.js';
+import { ConcernDeleteMultiple as deleteConcerns } from './src/deleteConcern.js';
+import { TieBaDeleteMultiple as deleteTieba } from './src/deleteTieba.js';
+import { FansDeleteMultiple as deleteFans } from './src/deleteFans.js';
 
 const cookie = fs.readFileSync('./cookie');
 
