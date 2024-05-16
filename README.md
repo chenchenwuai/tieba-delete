@@ -23,3 +23,27 @@
 - [x] 删除帖子
 
 > 贴吧每日删除数量有上限，如果错误中出现`limit`等字样，请第二天在尝试
+
+## 常见问题
+
+### 如果没有 `cheerio` 模块怎么办
+如果在运行过程中遇到 `Error: Cannot find module 'cheerio'` 错误，请按以下步骤操作：
+1. 确保你在项目根目录下。
+2. 运行以下命令安装 `cheerio` 模块：
+   ```bash
+   npm install cheerio
+   ```
+3. 如果仍有问题，可以尝试使用 `cnpm`（中国的 npm 镜像）来安装依赖。
+
+### 配置 `cnpm`
+`cnpm` 是 npm 镜像，可以加快国内用户的包安装速度。使用 `cnpm` 的步骤如下：
+1. 在终端或命令行中运行以下命令全局安装 `cnpm`：
+   ```bash
+   npm install -g cnpm --registry=https://registry.npmmirror.com
+   ```
+2. 使用 `cnpm` 安装 `cheerio`：
+   ```bash
+   cnpm install cheerio
+   ```
+
+按照上述步骤配置好环境后，再次运行 `npm run start` 即可开始使用本工具删除贴吧记录。
