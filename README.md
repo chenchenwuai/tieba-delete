@@ -12,7 +12,7 @@
   + 当账号在浏览器退出或重新登录后，cookie就失效了，需要重新设置cookie
 + 进行操作项配置，详细请查看`config.js`文件
 + 配置好之后，在当前路径下运行cmd
-+ 输入`node install`安装模块
++ 输入`node install`命令安装模块
 + 输入`node index`或者`npm run start`开始执行删除
 
 ## 功能集合
